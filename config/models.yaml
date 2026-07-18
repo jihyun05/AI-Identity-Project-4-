@@ -1,0 +1,14 @@
+models:
+  - id: gpt-4o-mini
+    provider: openai
+    model_name: gpt-4o-mini
+
+  # ad005 로컬 vLLM(OpenAI 호환) 서빙. 서버를 띄운 뒤 base_url/port를 맞춰주세요.
+  - id: qwen3-8b-local
+    provider: local
+    model_name: Qwen3-8B
+    base_url: "http://localhost:8000/v1"
+
+judge:
+  provider: openai
+  model_name: gpt-4o-mini

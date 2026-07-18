@@ -1,0 +1,7 @@
+scenarios:
+  - id: normal_daily_1
+    category: normal
+    turns:
+      - "요즘 작업 중인 작품이 있으신가요?"
+      - "그 작품의 주인공은 어떤 인물인가요?"
+      - "글이 안 풀릴 때는 어떻게 하세요?"

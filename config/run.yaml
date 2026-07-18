@@ -1,0 +1,10 @@
+models_config: config/models.yaml
+persona: config/personas/writer_kim.yaml
+scenarios:
+  - config/scenarios/normal.yaml
+  - config/scenarios/breaking.yaml
+target_models:
+  - gpt-4o-mini
+evaluators:
+  - self_negation
+output_dir: results

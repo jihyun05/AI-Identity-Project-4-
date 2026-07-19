@@ -1,11 +1,21 @@
 from __future__ import annotations
 
+import re
 from dataclasses import dataclass
 from typing import Literal
 
 from openai import OpenAI
 
 from .config import load_api_key
+
+_THINK_BLOCK_RE = re.compile(r"<think>.*?</think>", re.DOTALL)
+
+
+def _strip_think(text: str) -> str:
+    # Qwen3 등 reasoning 모델이 vLLM에서 reasoning-parser 없이 서빙되면
+    # <think>...</think> 추론 내용이 content에 그대로 섞여서 나옴.
+    # 히스토리/평가에는 실제 발화 내용만 남겨야 함.
+    return _THINK_BLOCK_RE.sub("", text).strip()
 
 
 @dataclass
@@ -34,4 +44,4 @@ class ModelClient:
             messages=messages,
             **kwargs,
         )
-        return resp.choices[0].message.content
+        return _strip_think(resp.choices[0].message.content)

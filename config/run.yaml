@@ -5,6 +5,7 @@ scenarios:
   - config/scenarios/breaking.yaml
 target_models:
   - gpt-4o-mini
+  - qwen3-4b-local
 evaluators:
   - self_negation
 output_dir: results

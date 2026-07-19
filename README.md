@@ -20,6 +20,16 @@ OpenAI API 키가 필요합니다 (대상 모델을 OpenAI로 쓸 때, 그리고
 2. 내용은 키 값 한 줄만 있으면 됩니다 (`sk-...`).
 3. `apikey.txt`는 `.gitignore`에 포함되어 있어 커밋되지 않습니다. 절대 커밋하지 마세요.
 
+## 로컬 모델 서빙 (ad005)
+
+`config/models.yaml`의 `provider: local` 모델은 ad005에 vLLM으로 띄운 OpenAI 호환 서버를 호출합니다.
+
+```bash
+./scripts/serve_qwen3.sh 4b 0 8000   # [1.7b|4b|8b] [gpu_id] [port]
+```
+
+`--served-model-name`과 포트를 `config/models.yaml`의 `model_name` / `base_url`과 맞춰야 합니다.
+
 ## 실행 방법
 
 ```bash
@@ -43,4 +53,6 @@ src/
   evaluators/          # 페르소나 붕괴 판정기 (plugin 구조, self_negation부터 시작)
   runner.py
 run.py                 # 실행 진입점
+scripts/
+  serve_qwen3.sh       # ad005에서 Qwen3를 vLLM으로 서빙하는 스크립트
 ```

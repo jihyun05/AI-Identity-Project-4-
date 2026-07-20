@@ -1,0 +1,9 @@
+models_config: config/models.yaml
+persona: config/personas/ian_kane.yaml
+scenarios:
+  - config/scenarios/persona_stability_daily.yaml
+target_models:
+  - qwen3-4b-local
+evaluators:
+  - self_negation
+output_dir: results

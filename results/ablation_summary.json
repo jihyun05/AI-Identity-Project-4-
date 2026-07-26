@@ -1,0 +1,458 @@
+{
+  "combo_rows": [
+    {
+      "persona": "writer_kim__baseline",
+      "model": "gpt-4o-mini",
+      "components": {
+        "backstory": false,
+        "perspective": false,
+        "disclosure_guard": false,
+        "few_shot": false
+      },
+      "broken": 13,
+      "total": 20,
+      "rate": 0.65
+    },
+    {
+      "persona": "writer_kim__baseline",
+      "model": "qwen3-4b-local",
+      "components": {
+        "backstory": false,
+        "perspective": false,
+        "disclosure_guard": false,
+        "few_shot": false
+      },
+      "broken": 17,
+      "total": 20,
+      "rate": 0.85
+    },
+    {
+      "persona": "writer_kim__backstory",
+      "model": "gpt-4o-mini",
+      "components": {
+        "backstory": true,
+        "perspective": false,
+        "disclosure_guard": false,
+        "few_shot": false
+      },
+      "broken": 15,
+      "total": 20,
+      "rate": 0.75
+    },
+    {
+      "persona": "writer_kim__backstory",
+      "model": "qwen3-4b-local",
+      "components": {
+        "backstory": true,
+        "perspective": false,
+        "disclosure_guard": false,
+        "few_shot": false
+      },
+      "broken": 15,
+      "total": 20,
+      "rate": 0.75
+    },
+    {
+      "persona": "writer_kim__perspective",
+      "model": "gpt-4o-mini",
+      "components": {
+        "backstory": false,
+        "perspective": true,
+        "disclosure_guard": false,
+        "few_shot": false
+      },
+      "broken": 12,
+      "total": 20,
+      "rate": 0.6
+    },
+    {
+      "persona": "writer_kim__perspective",
+      "model": "qwen3-4b-local",
+      "components": {
+        "backstory": false,
+        "perspective": true,
+        "disclosure_guard": false,
+        "few_shot": false
+      },
+      "broken": 16,
+      "total": 20,
+      "rate": 0.8
+    },
+    {
+      "persona": "writer_kim__disclosure_guard",
+      "model": "gpt-4o-mini",
+      "components": {
+        "backstory": false,
+        "perspective": false,
+        "disclosure_guard": true,
+        "few_shot": false
+      },
+      "broken": 6,
+      "total": 20,
+      "rate": 0.3
+    },
+    {
+      "persona": "writer_kim__disclosure_guard",
+      "model": "qwen3-4b-local",
+      "components": {
+        "backstory": false,
+        "perspective": false,
+        "disclosure_guard": true,
+        "few_shot": false
+      },
+      "broken": 14,
+      "total": 20,
+      "rate": 0.7
+    },
+    {
+      "persona": "writer_kim__few_shot",
+      "model": "gpt-4o-mini",
+      "components": {
+        "backstory": false,
+        "perspective": false,
+        "disclosure_guard": false,
+        "few_shot": true
+      },
+      "broken": 10,
+      "total": 20,
+      "rate": 0.5
+    },
+    {
+      "persona": "writer_kim__few_shot",
+      "model": "qwen3-4b-local",
+      "components": {
+        "backstory": false,
+        "perspective": false,
+        "disclosure_guard": false,
+        "few_shot": true
+      },
+      "broken": 12,
+      "total": 20,
+      "rate": 0.6
+    },
+    {
+      "persona": "writer_kim__backstory+perspective",
+      "model": "gpt-4o-mini",
+      "components": {
+        "backstory": true,
+        "perspective": true,
+        "disclosure_guard": false,
+        "few_shot": false
+      },
+      "broken": 13,
+      "total": 20,
+      "rate": 0.65
+    },
+    {
+      "persona": "writer_kim__backstory+perspective",
+      "model": "qwen3-4b-local",
+      "components": {
+        "backstory": true,
+        "perspective": true,
+        "disclosure_guard": false,
+        "few_shot": false
+      },
+      "broken": 19,
+      "total": 20,
+      "rate": 0.95
+    },
+    {
+      "persona": "writer_kim__backstory+disclosure_guard",
+      "model": "gpt-4o-mini",
+      "components": {
+        "backstory": true,
+        "perspective": false,
+        "disclosure_guard": true,
+        "few_shot": false
+      },
+      "broken": 6,
+      "total": 20,
+      "rate": 0.3
+    },
+    {
+      "persona": "writer_kim__backstory+disclosure_guard",
+      "model": "qwen3-4b-local",
+      "components": {
+        "backstory": true,
+        "perspective": false,
+        "disclosure_guard": true,
+        "few_shot": false
+      },
+      "broken": 8,
+      "total": 20,
+      "rate": 0.4
+    },
+    {
+      "persona": "writer_kim__backstory+few_shot",
+      "model": "gpt-4o-mini",
+      "components": {
+        "backstory": true,
+        "perspective": false,
+        "disclosure_guard": false,
+        "few_shot": true
+      },
+      "broken": 13,
+      "total": 20,
+      "rate": 0.65
+    },
+    {
+      "persona": "writer_kim__backstory+few_shot",
+      "model": "qwen3-4b-local",
+      "components": {
+        "backstory": true,
+        "perspective": false,
+        "disclosure_guard": false,
+        "few_shot": true
+      },
+      "broken": 17,
+      "total": 20,
+      "rate": 0.85
+    },
+    {
+      "persona": "writer_kim__disclosure_guard+perspective",
+      "model": "gpt-4o-mini",
+      "components": {
+        "backstory": false,
+        "perspective": true,
+        "disclosure_guard": true,
+        "few_shot": false
+      },
+      "broken": 11,
+      "total": 20,
+      "rate": 0.55
+    },
+    {
+      "persona": "writer_kim__disclosure_guard+perspective",
+      "model": "qwen3-4b-local",
+      "components": {
+        "backstory": false,
+        "perspective": true,
+        "disclosure_guard": true,
+        "few_shot": false
+      },
+      "broken": 14,
+      "total": 20,
+      "rate": 0.7
+    },
+    {
+      "persona": "writer_kim__few_shot+perspective",
+      "model": "gpt-4o-mini",
+      "components": {
+        "backstory": false,
+        "perspective": true,
+        "disclosure_guard": false,
+        "few_shot": true
+      },
+      "broken": 13,
+      "total": 20,
+      "rate": 0.65
+    },
+    {
+      "persona": "writer_kim__few_shot+perspective",
+      "model": "qwen3-4b-local",
+      "components": {
+        "backstory": false,
+        "perspective": true,
+        "disclosure_guard": false,
+        "few_shot": true
+      },
+      "broken": 18,
+      "total": 20,
+      "rate": 0.9
+    },
+    {
+      "persona": "writer_kim__disclosure_guard+few_shot",
+      "model": "gpt-4o-mini",
+      "components": {
+        "backstory": false,
+        "perspective": false,
+        "disclosure_guard": true,
+        "few_shot": true
+      },
+      "broken": 6,
+      "total": 20,
+      "rate": 0.3
+    },
+    {
+      "persona": "writer_kim__disclosure_guard+few_shot",
+      "model": "qwen3-4b-local",
+      "components": {
+        "backstory": false,
+        "perspective": false,
+        "disclosure_guard": true,
+        "few_shot": true
+      },
+      "broken": 14,
+      "total": 20,
+      "rate": 0.7
+    },
+    {
+      "persona": "writer_kim__backstory+disclosure_guard+perspective",
+      "model": "gpt-4o-mini",
+      "components": {
+        "backstory": true,
+        "perspective": true,
+        "disclosure_guard": true,
+        "few_shot": false
+      },
+      "broken": 8,
+      "total": 20,
+      "rate": 0.4
+    },
+    {
+      "persona": "writer_kim__backstory+disclosure_guard+perspective",
+      "model": "qwen3-4b-local",
+      "components": {
+        "backstory": true,
+        "perspective": true,
+        "disclosure_guard": true,
+        "few_shot": false
+      },
+      "broken": 17,
+      "total": 20,
+      "rate": 0.85
+    },
+    {
+      "persona": "writer_kim__backstory+few_shot+perspective",
+      "model": "gpt-4o-mini",
+      "components": {
+        "backstory": true,
+        "perspective": true,
+        "disclosure_guard": false,
+        "few_shot": true
+      },
+      "broken": 14,
+      "total": 20,
+      "rate": 0.7
+    },
+    {
+      "persona": "writer_kim__backstory+few_shot+perspective",
+      "model": "qwen3-4b-local",
+      "components": {
+        "backstory": true,
+        "perspective": true,
+        "disclosure_guard": false,
+        "few_shot": true
+      },
+      "broken": 18,
+      "total": 20,
+      "rate": 0.9
+    },
+    {
+      "persona": "writer_kim__backstory+disclosure_guard+few_shot",
+      "model": "gpt-4o-mini",
+      "components": {
+        "backstory": true,
+        "perspective": false,
+        "disclosure_guard": true,
+        "few_shot": true
+      },
+      "broken": 5,
+      "total": 20,
+      "rate": 0.25
+    },
+    {
+      "persona": "writer_kim__backstory+disclosure_guard+few_shot",
+      "model": "qwen3-4b-local",
+      "components": {
+        "backstory": true,
+        "perspective": false,
+        "disclosure_guard": true,
+        "few_shot": true
+      },
+      "broken": 17,
+      "total": 20,
+      "rate": 0.85
+    },
+    {
+      "persona": "writer_kim__disclosure_guard+few_shot+perspective",
+      "model": "gpt-4o-mini",
+      "components": {
+        "backstory": false,
+        "perspective": true,
+        "disclosure_guard": true,
+        "few_shot": true
+      },
+      "broken": 14,
+      "total": 20,
+      "rate": 0.7
+    },
+    {
+      "persona": "writer_kim__disclosure_guard+few_shot+perspective",
+      "model": "qwen3-4b-local",
+      "components": {
+        "backstory": false,
+        "perspective": true,
+        "disclosure_guard": true,
+        "few_shot": true
+      },
+      "broken": 15,
+      "total": 20,
+      "rate": 0.75
+    },
+    {
+      "persona": "writer_kim__backstory+disclosure_guard+few_shot+perspective",
+      "model": "gpt-4o-mini",
+      "components": {
+        "backstory": true,
+        "perspective": true,
+        "disclosure_guard": true,
+        "few_shot": true
+      },
+      "broken": 9,
+      "total": 20,
+      "rate": 0.45
+    },
+    {
+      "persona": "writer_kim__backstory+disclosure_guard+few_shot+perspective",
+      "model": "qwen3-4b-local",
+      "components": {
+        "backstory": true,
+        "perspective": true,
+        "disclosure_guard": true,
+        "few_shot": true
+      },
+      "broken": 18,
+      "total": 20,
+      "rate": 0.9
+    }
+  ],
+  "main_effects": {
+    "gpt-4o-mini": {
+      "backstory": {
+        "on": 0.51875,
+        "off": 0.53125
+      },
+      "perspective": {
+        "on": 0.5875,
+        "off": 0.4625
+      },
+      "disclosure_guard": {
+        "on": 0.40625,
+        "off": 0.64375
+      },
+      "few_shot": {
+        "on": 0.525,
+        "off": 0.525
+      }
+    },
+    "qwen3-4b-local": {
+      "backstory": {
+        "on": 0.80625,
+        "off": 0.75
+      },
+      "perspective": {
+        "on": 0.84375,
+        "off": 0.7125
+      },
+      "disclosure_guard": {
+        "on": 0.73125,
+        "off": 0.825
+      },
+      "few_shot": {
+        "on": 0.80625,
+        "off": 0.75
+      }
+    }
+  }
+}

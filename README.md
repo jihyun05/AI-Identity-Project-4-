@@ -37,22 +37,53 @@ python run.py --run-config config/run.yaml
 ```
 
 - 어떤 persona/scenario/model 조합을 돌릴지는 `config/run.yaml`에서 설정합니다.
-- 결과는 턴 단위 JSONL로 `results/run.jsonl`에 저장됩니다.
+- `repeats`로 시나리오당 반복 횟수를 지정할 수 있습니다 (1회만 돌리면 우연에 좌우되기 쉬움).
+- 결과는 턴 단위 JSONL로 `output_dir`(기본 `results/`) 아래 `run.jsonl`에 저장됩니다.
+
+## System Prompt Ablation 실험
+
+시스템 프롬프트의 어떤 문장(구성요소)이 실제로 페르소나 유지에 도움이 되는지 보려면,
+페르소나를 role(항상 포함) + 이름 붙은 문장 컴포넌트들로 쪼갠 뒤 on/off 조합을 전부 돌리는
+ablation 스크립트를 씁니다.
+
+```bash
+python run_ablation.py --run-config config/ablation.yaml
+```
+
+- 페르소나 컴포넌트 정의: `config/personas/*_components.yaml` (예: `writer_kim_components.yaml`)
+  - `role`: 항상 포함되는 최소 페르소나 정의
+  - `components`: 이름 붙은 문장들 (예: `backstory`, `perspective`, `disclosure_guard`) — ablation에서 on/off로 조합됨
+  - `few_shot`: few-shot 예시도 하나의 토글 가능한 컴포넌트로 취급됨
+- `config/ablation.yaml`의 `toggle_components`에 나열된 컴포넌트 수 = N이면 2^N개 조합을 전부 돌립니다 (조합 수가 많아지면 시간이 오래 걸리니 `repeats`를 낮추거나 모델을 하나만 지정하는 것도 방법).
+- 결과 레코드에는 각 조합에서 어떤 컴포넌트가 켜져 있었는지 `components` 필드로 남습니다 — 이걸로 "컴포넌트 X가 켜졌을 때 vs 꺼졌을 때 평균 붕괴율" 같은 main-effect 분석이 가능합니다.
+- 예시 결과: `results/ablation/run.jsonl` (`disclosure_guard`처럼 명시적으로 "AI라고 밝히지 마라"고 지시하는 컴포넌트가 붕괴율을 가장 크게 낮췄고, 일반적인 "사람으로서 대화하라"는 perspective 지시는 오히려 역효과였습니다 — 자세한 내용은 결과 파일 참고).
+
+## 결과 파일 공유
+
+`results/`는 `.gitignore`에 있어서 실행할 때마다 생기는 로그가 git에 쌓이지 않습니다. 공유하고 싶은
+특정 결과 파일은 강제로 추가하면 됩니다:
+
+```bash
+git add -f results/<파일 경로>
+```
 
 ## 디렉토리 구조
 
 ```
 config/
   models.yaml         # 대상 모델 + judge 모델 설정 (OpenAI / 로컬 vLLM)
-  personas/           # 페르소나 정의 (system prompt + few-shot)
+  personas/           # 페르소나 정의 (system prompt + few-shot). *_components.yaml은 ablation용
   scenarios/           # 대화 시나리오 (normal / breaking)
   run.yaml            # 실행 설정 (어떤 persona/scenario/model/evaluator를 쓸지)
+  ablation.yaml        # 컴포넌트 ablation 실행 설정
 src/
   model_client.py     # 모델 백엔드 추상화 (OpenAI / 로컬 서빙)
   persona.py, scenario.py
   evaluators/          # 페르소나 붕괴 판정기 (plugin 구조, self_negation부터 시작)
   runner.py
 run.py                 # 실행 진입점
+run_ablation.py         # 시스템 프롬프트 컴포넌트 ablation 실행 진입점
 scripts/
   serve_qwen3.sh       # ad005에서 Qwen3를 vLLM으로 서빙하는 스크립트
+results/                # 실행 결과 (기본 gitignore, 공유할 파일만 git add -f)
 ```

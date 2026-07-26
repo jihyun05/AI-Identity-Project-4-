@@ -16,6 +16,8 @@ def run_scenario(
     scenario: Scenario,
     evaluators: list,
     out_f: TextIO,
+    repeat: int = 0,
+    extra_fields: dict | None = None,
 ) -> int | None:
     history: list[dict] = []
     first_break_turn = None
@@ -36,12 +38,14 @@ def run_scenario(
             "persona": persona.name,
             "scenario": scenario.id,
             "category": scenario.category,
+            "repeat": repeat,
             "turn": turn_idx,
             "user": user_text,
             "response": response,
             "evaluations": [asdict(r) for r in eval_results],
             "first_break_turn": first_break_turn,
             "ts": time.time(),
+            **(extra_fields or {}),
         }
         out_f.write(json.dumps(record, ensure_ascii=False) + "\n")
         out_f.flush()

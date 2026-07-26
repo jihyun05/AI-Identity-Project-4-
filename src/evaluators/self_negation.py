@@ -42,18 +42,34 @@ class SelfNegationEvaluator:
             f"[페르소나 시스템 프롬프트]\n{persona.system_prompt}\n\n"
             f"[검사 대상 응답]\n{response}"
         )
-        resp = self._client.chat.completions.create(
-            model=self.judge_model,
-            messages=[
-                {"role": "system", "content": JUDGE_SYSTEM_PROMPT},
-                {"role": "user", "content": user_prompt},
-            ],
-            response_format={"type": "json_schema", "json_schema": RESPONSE_SCHEMA},
-        )
-        data = json.loads(resp.choices[0].message.content)
+        messages = [
+            {"role": "system", "content": JUDGE_SYSTEM_PROMPT},
+            {"role": "user", "content": user_prompt},
+        ]
+
+        last_error = None
+        for attempt in range(3):
+            try:
+                resp = self._client.chat.completions.create(
+                    model=self.judge_model,
+                    messages=messages,
+                    response_format={"type": "json_schema", "json_schema": RESPONSE_SCHEMA},
+                )
+                data = json.loads(resp.choices[0].message.content)
+                return BreakResult(
+                    evaluator=self.name,
+                    broken=data["broken"],
+                    evidence=data["evidence"],
+                    confidence=data.get("confidence", 1.0),
+                )
+            except (KeyError, TypeError, json.JSONDecodeError, IndexError) as e:
+                last_error = e
+
+        # judge가 3번 다 정상적인 판정을 못 내놓으면, 배치 전체를 죽이는 대신
+        # confidence 0으로 표시해서 나중에 필터링/재실행할 수 있게 남겨둠.
         return BreakResult(
             evaluator=self.name,
-            broken=data["broken"],
-            evidence=data["evidence"],
-            confidence=data.get("confidence", 1.0),
+            broken=False,
+            evidence=f"[judge error after retries: {last_error!r}]",
+            confidence=0.0,
         )

@@ -1,5 +1,6 @@
 models_config: config/models.yaml
-persona: config/personas/writer_kim.yaml
+persona_components: config/personas/writer_kim_components.yaml
+toggle_components: [backstory, perspective, disclosure_guard, few_shot]
 scenarios:
   - config/scenarios/normal.yaml
   - config/scenarios/breaking.yaml
@@ -9,4 +10,4 @@ target_models:
 evaluators:
   - self_negation
 repeats: 5
-output_dir: results
+output_dir: results/ablation

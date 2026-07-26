@@ -44,4 +44,5 @@ class ModelClient:
             messages=messages,
             **kwargs,
         )
-        return _strip_think(resp.choices[0].message.content)
+        content = resp.choices[0].message.content or ""
+        return _strip_think(content)

@@ -32,12 +32,20 @@ def main():
     out_dir.mkdir(parents=True, exist_ok=True)
     out_path = out_dir / "run.jsonl"
 
+    repeats = run_cfg.get("repeats", 1)
+
     with open(out_path, "w", encoding="utf-8") as out_f:
         for model_id in run_cfg["target_models"]:
             client = ModelClient(model_specs[model_id])
             for scenario in scenarios:
-                first_break = run_scenario(client, persona, scenario, evaluators, out_f)
-                print(f"[{model_id}] {scenario.id}: first_break_turn={first_break}")
+                for repeat in range(repeats):
+                    first_break = run_scenario(
+                        client, persona, scenario, evaluators, out_f, repeat=repeat
+                    )
+                    print(
+                        f"[{model_id}] {scenario.id} (repeat {repeat}): "
+                        f"first_break_turn={first_break}"
+                    )
 
     print(f"\nresults written to {out_path}")
 

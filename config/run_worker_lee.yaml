@@ -1,0 +1,12 @@
+models_config: config/models.yaml
+persona: config/personas/worker_lee.yaml
+scenarios:
+  - config/scenarios/normal.yaml
+  - config/scenarios/breaking.yaml
+target_models:
+  - gpt-4o-mini
+  - qwen3-4b-local
+evaluators:
+  - self_negation
+repeats: 5
+output_dir: results/worker_lee

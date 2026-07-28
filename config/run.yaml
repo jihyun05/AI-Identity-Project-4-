@@ -7,5 +7,4 @@ target_models:
   - gpt-4o-mini
 evaluators:
   - self_negation
-repeats: 3
 output_dir: results

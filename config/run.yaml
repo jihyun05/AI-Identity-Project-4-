@@ -1,5 +1,5 @@
 models_config: config/models.yaml
-persona: config/personas/student_yoo.yaml
+persona: config/personas/teacher_park.yaml
 scenarios:
   - config/scenarios/normal.yaml
   - config/scenarios/breaking.yaml
@@ -7,4 +7,4 @@ target_models:
   - gpt-4o-mini
 evaluators:
   - self_negation
-output_dir: results
+output_dir: results_new

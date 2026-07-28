@@ -1,13 +1,13 @@
 models_config: config/models.yaml
-persona_components: config/personas/writer_kim_components.yaml
+persona_components: config/personas/student_yoo_components.yaml
 toggle_components: [backstory, perspective, disclosure_guard, few_shot]
 scenarios:
   - config/scenarios/normal.yaml
   - config/scenarios/breaking.yaml
 target_models:
   - gpt-4o-mini
-  - qwen3-4b-local
 evaluators:
   - self_negation
-repeats: 5
-output_dir: results/ablation
+repeats: 1
+output_dir: results_new
+

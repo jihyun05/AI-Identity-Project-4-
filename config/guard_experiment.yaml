@@ -1,0 +1,16 @@
+models_config: config/models.yaml
+persona_components: config/personas/writer_kim_components.yaml
+
+# guard 문구를 제외한 나머지는 지금까지 결과상 gpt-4o-mini에게 가장 나았던 조합으로 고정
+# (backstory + few_shot, perspective는 뺌 — ablation에서 오히려 역효과였음)
+fixed_components: [backstory, few_shot]
+guard_variants: [disclosure_guard, disclosure_guard_v2, disclosure_guard_v3, disclosure_guard_v4]
+
+scenarios:
+  - config/scenarios/breaking.yaml
+target_models:
+  - gpt-4o-mini
+evaluators:
+  - self_negation
+repeats: 5
+output_dir: results/guard_experiment

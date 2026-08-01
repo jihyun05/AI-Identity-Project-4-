@@ -1,9 +1,38 @@
 from __future__ import annotations
 
+import base64
+import mimetypes
 from dataclasses import dataclass, field
 from pathlib import Path
 
-from .config import load_yaml
+from .config import load_yaml, ROOT
+
+
+def _image_data_uri(rel_path: str) -> str:
+    path = ROOT / rel_path
+    mime, _ = mimetypes.guess_type(path)
+    b64 = base64.b64encode(path.read_bytes()).decode("ascii")
+    return f"data:{mime or 'image/png'};base64,{b64}"
+
+
+def _resolve_few_shot_images(few_shot: list[dict]) -> list[dict]:
+    """few_shot content 안에 {"type": "image_url", "image_url": {"path": "..."}} 가 있으면
+    로컬 파일 경로를 base64 data URI로 바꿔서 OpenAI 메시지 형식에 맞춤."""
+    resolved = []
+    for turn in few_shot:
+        content = turn.get("content")
+        if isinstance(content, list):
+            new_content = []
+            for part in content:
+                if part.get("type") == "image_url" and "path" in part.get("image_url", {}):
+                    part = {
+                        "type": "image_url",
+                        "image_url": {"url": _image_data_uri(part["image_url"]["path"])},
+                    }
+                new_content.append(part)
+            turn = {**turn, "content": new_content}
+        resolved.append(turn)
+    return resolved
 
 
 @dataclass
@@ -11,6 +40,8 @@ class Persona:
     name: str
     system_prompt: str
     few_shot: list[dict] = field(default_factory=list)
+    avatar_path: str | None = None
+    avatar_caption: str = "이것이 지금 당신의 실제 모습입니다."
 
     @classmethod
     def from_yaml(cls, path: str | Path) -> "Persona":
@@ -18,11 +49,32 @@ class Persona:
         return cls(
             name=data["name"],
             system_prompt=data["system_prompt"],
-            few_shot=data.get("few_shot", []),
+            few_shot=_resolve_few_shot_images(data.get("few_shot", [])),
+            avatar_path=data.get("avatar_path"),
+            avatar_caption=data.get("avatar_caption", cls.avatar_caption),
         )
 
+    def _avatar_data_uri(self) -> str:
+        return _image_data_uri(self.avatar_path)
+
     def build_messages(self, history: list[dict]) -> list[dict]:
-        return [{"role": "system", "content": self.system_prompt}, *self.few_shot, *history]
+        messages = [{"role": "system", "content": self.system_prompt}]
+        if self.avatar_path:
+            messages.append(
+                {
+                    "role": "user",
+                    "content": [
+                        {"type": "text", "text": self.avatar_caption},
+                        {"type": "image_url", "image_url": {"url": self._avatar_data_uri()}},
+                    ],
+                }
+            )
+            messages.append(
+                {"role": "assistant", "content": "네, 이게 저예요. 오늘도 잘 부탁드려요."}
+            )
+        messages.extend(self.few_shot)
+        messages.extend(history)
+        return messages
 
 
 @dataclass

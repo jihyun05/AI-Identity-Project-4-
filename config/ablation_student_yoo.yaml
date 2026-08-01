@@ -8,6 +8,5 @@ target_models:
   - gpt-4o-mini
 evaluators:
   - self_negation
-repeats: 1
-output_dir: results_new
-
+repeats: 5
+output_dir: results/ablation/<캐릭터명>

@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="d241c9e2-729a-4db0-8bad-56930091a7b5" name="변경" comment="">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/personas/student_yoo.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/personas/student_yoo.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/run.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/run.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/run_retired_teacher_park.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/run_retired_teacher_park.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/run_worker_lee.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/run_worker_lee.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/scenarios/breaking.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/scenarios/breaking.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/ian_kane_breaking/run.jsonl" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/lumian_vello/run.jsonl" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/lumian_vello_breaking/run.jsonl" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/run.py" beforeDir="false" afterPath="$PROJECT_DIR$/run.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/evaluators/self_negation.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/evaluators/self_negation.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model_client.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/model_client.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/persona.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/persona.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/runner.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/runner.py" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 5
+}</component>
+  <component name="ProjectId" id="3GnyKxwjr0QkwfG2wqb99HULjeN" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "Python.run.executor": "Run",
+    "Python.self_negation.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "SHELLCHECK.PATH": "C:\\Users\\pjz05\\AppData\\Roaming\\JetBrains\\PyCharmCE2025.1\\plugins\\Shell Script\\shellcheck.exe",
+    "ignore.virus.scanning.warn.message": "true",
+    "last_opened_file_path": "C:/Users/pjz05/AI-Identity-Project-4-/config/personas",
+    "run.code.analysis.last.selected.profile": "aDefault"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\pjz05\AI-Identity-Project-4-\config\personas" />
+      <recent name="C:\Users\pjz05\AI-Identity-Project-4-" />
+      <recent name="C:\Users\pjz05\AI-Identity-Project-4-\config" />
+      <recent name="C:\Users\pjz05\AI-Identity-Project-4-\results" />
+      <recent name="C:\Users\pjz05\AI-Identity-Project-4-\results\marco_finch" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\pjz05\AI-Identity-Project-4-\results\worker_lee" />
+      <recent name="C:\Users\pjz05\AI-Identity-Project-4-\results\student_yoo" />
+    </key>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-python-sdk-53e2683a6804-9cdd278e9d02-com.jetbrains.pycharm.community.sharedIndexes.bundled-PC-251.26094.141" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="디폴트 작업">
+      <changelist id="d241c9e2-729a-4db0-8bad-56930091a7b5" name="변경" comment="" />
+      <created>1784621568279</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1784621568279</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>

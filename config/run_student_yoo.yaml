@@ -1,6 +1,5 @@
 models_config: config/models.yaml
-persona_components: config/personas/student_yoo_components.yaml
-toggle_components: [backstory, perspective, disclosure_guard, few_shot]
+persona: config/personas/student_yoo.yaml
 scenarios:
   - config/scenarios/normal.yaml
   - config/scenarios/breaking.yaml
@@ -8,6 +7,4 @@ target_models:
   - gpt-4o-mini
 evaluators:
   - self_negation
-repeats: 1
-output_dir: results_new
-
+output_dir: results_new/student_yoo

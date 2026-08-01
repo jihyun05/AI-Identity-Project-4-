@@ -1,5 +1,5 @@
 models_config: config/models.yaml
-persona_components: config/personas/student_yoo_components.yaml
+persona_components: config/personas/teacher_park_components.yaml
 toggle_components: [backstory, perspective, disclosure_guard, few_shot]
 scenarios:
   - config/scenarios/normal.yaml
@@ -8,6 +8,5 @@ target_models:
   - gpt-4o-mini
 evaluators:
   - self_negation
-repeats: 1
-output_dir: results_new
-
+repeats: 5
+output_dir: results/ablation/teacher_park

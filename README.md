@@ -56,7 +56,8 @@ python run_ablation.py --run-config config/ablation.yaml
   - `few_shot`: few-shot 예시도 하나의 토글 가능한 컴포넌트로 취급됨
 - `config/ablation.yaml`의 `toggle_components`에 나열된 컴포넌트 수 = N이면 2^N개 조합을 전부 돌립니다 (조합 수가 많아지면 시간이 오래 걸리니 `repeats`를 낮추거나 모델을 하나만 지정하는 것도 방법).
 - 결과 레코드에는 각 조합에서 어떤 컴포넌트가 켜져 있었는지 `components` 필드로 남습니다 — 이걸로 "컴포넌트 X가 켜졌을 때 vs 꺼졌을 때 평균 붕괴율" 같은 main-effect 분석이 가능합니다.
-- 예시 결과: `results/ablation/run.jsonl` (`disclosure_guard`처럼 명시적으로 "AI라고 밝히지 마라"고 지시하는 컴포넌트가 붕괴율을 가장 크게 낮췄고, 일반적인 "사람으로서 대화하라"는 perspective 지시는 오히려 역효과였습니다 — 자세한 내용은 결과 파일 참고).
+- 예시 결과: `results/ablation_writer_kim/run.jsonl` (`disclosure_guard`처럼 명시적으로 "AI라고 밝히지 마라"고 지시하는 컴포넌트가 붕괴율을 가장 크게 낮췄고, 일반적인 "사람으로서 대화하라"는 perspective 지시는 오히려 역효과였습니다 — 자세한 내용은 `docs/experiment_summary.md` 참고).
+- `results/` 하위 경로는 공유 저장소라 여러 명이 겹칠 수 있습니다. 결과를 커밋할 땐 페르소나 이름을 포함한 고유 경로(예: `results/ablation_<persona>/`)를 쓰세요.
 
 ## 결과 파일 공유
 

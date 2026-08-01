@@ -85,4 +85,4 @@
 
 ---
 
-*세부 근거/원자료: `results/ablation/`, `results/guard_experiment/`, `results/avatar_experiment/`, `results/avatar_v2_check/`. 관련 기억: 이 세션의 memory 파일 참고 (project_persona_break_harness, feedback_persona_break_severity, feedback_perspective_instruction_backfires, feedback_ad005_gpu_shared).*
+*세부 근거/원자료: `results/ablation_writer_kim/`, `results/guard_experiment/`, `results/avatar_experiment/`, `results/avatar_v2_check/`. (`results/ablation/`은 팀원의 student_yoo 결과와 경로가 겹쳐서 `ablation_writer_kim/`으로 옮김 — 공유 저장소에서 `results/` 하위 경로 이름은 페르소나별로 구분해서 쓸 것.) 관련 기억: 이 세션의 memory 파일 참고 (project_persona_break_harness, feedback_persona_break_severity, feedback_perspective_instruction_backfires, feedback_ad005_gpu_shared).*

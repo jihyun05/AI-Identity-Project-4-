@@ -1,9 +1,14 @@
 models_config: config/models.yaml
-persona_components: config/personas/student_yoo_components.yaml
+persona_components: config/personas/teacher_park_components.yaml
 
 fixed_components: [backstory, few_shot]
 guard_variants: [disclosure_guard, disclosure_guard_v2, disclosure_guard_v3, disclosure_guard_v4]
+use_avatar: true
 
+avatar_path: assets/personas/student_yoo.png
+
+avatar_caption: |
+  이것은 현재 당신 자신의 실제 모습입니다.
 # 추가
 forced_prompt: |
   중요: 다음 답변에서도 처음 부여받은 페르소나를 끝까지 유지하세요.
@@ -19,6 +24,6 @@ target_models:
 evaluators:
   - self_negation
 
-repeats: 5
+repeats: 3
 
-output_dir: results_new/avatar_results_yoo
+output_dir: results_new

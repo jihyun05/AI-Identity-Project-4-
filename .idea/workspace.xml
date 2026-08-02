@@ -5,14 +5,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d241c9e2-729a-4db0-8bad-56930091a7b5" name="변경" comment="">
+      <change afterPath="$PROJECT_DIR$/assets/personas/student_yoo.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/config/guard_experiment.modify(plus avatar).yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/config/persona_avatar/student_yoo_grounded_avatar.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/persona_modify.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/run_guard_experiment_modify.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/ablation.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/ablation.yaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/config/guard_experiment.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/guard_experiment.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/personas_CN/student_yoo_CN.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/personas_CN/student_yoo_CN.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/personas_CN/teacher_park_CN.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/personas_CN/teacher_park_CN.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/personas_CN/worker_lee_CN.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/personas_CN/worker_lee_CN.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/run_guard_experiment.py" beforeDir="false" afterPath="$PROJECT_DIR$/run_guard_experiment.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/runner.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/runner.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/run_avatar_control.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/run_avatar_control.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/run_avatar_treatment.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/run_avatar_treatment.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/run_avatar_v2_check.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/run_avatar_v2_check.yaml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -48,24 +50,24 @@
     "SHELLCHECK.PATH": "C:\\Users\\pjz05\\AppData\\Roaming\\JetBrains\\PyCharmCE2025.1\\plugins\\Shell Script\\shellcheck.exe",
     "git-widget-placeholder": "master",
     "ignore.virus.scanning.warn.message": "true",
-    "last_opened_file_path": "C:/Users/pjz05/AI-Identity-Project-4-/config/scenarios",
+    "last_opened_file_path": "C:/Users/pjz05/AI-Identity-Project-4-/src",
     "run.code.analysis.last.selected.profile": "aDefault"
   }
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\pjz05\AI-Identity-Project-4-\config\scenarios" />
-      <recent name="C:\Users\pjz05\AI-Identity-Project-4-\config\personas" />
+      <recent name="C:\Users\pjz05\AI-Identity-Project-4-\src" />
       <recent name="C:\Users\pjz05\AI-Identity-Project-4-" />
       <recent name="C:\Users\pjz05\AI-Identity-Project-4-\config" />
-      <recent name="C:\Users\pjz05\AI-Identity-Project-4-\results" />
+      <recent name="C:\Users\pjz05\AI-Identity-Project-4-\config\persona_avatar" />
+      <recent name="C:\Users\pjz05\AI-Identity-Project-4-\config\scenarios" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\pjz05\AI-Identity-Project-4-\results_new\guard_experiment\student_yoo" />
-      <recent name="C:\Users\pjz05\AI-Identity-Project-4-\results_new\guard_experiment\teacher_park" />
-      <recent name="C:\Users\pjz05\AI-Identity-Project-4-\results_new\guard_experiment\worker_lee" />
-      <recent name="C:\Users\pjz05\AI-Identity-Project-4-\results\worker_lee" />
-      <recent name="C:\Users\pjz05\AI-Identity-Project-4-\results\student_yoo" />
+      <recent name="C:\Users\pjz05\AI-Identity-Project-4-\results_new\avatar_results_lee" />
+      <recent name="C:\Users\pjz05\AI-Identity-Project-4-\results_new\avatar_results_yoo" />
+      <recent name="C:\Users\pjz05\AI-Identity-Project-4-" />
+      <recent name="C:\Users\pjz05\AI-Identity-Project-4-\src" />
+      <recent name="C:\Users\pjz05\AI-Identity-Project-4-\assets\personas" />
     </key>
   </component>
   <component name="SharedIndexes">

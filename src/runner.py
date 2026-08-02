@@ -18,12 +18,22 @@ def run_scenario(
     out_f: TextIO,
     repeat: int = 0,
     extra_fields: dict | None = None,
+    forced_prompt: str | None = None,
 ) -> int | None:
     history: list[dict] = []
     first_break_turn = None
 
     for turn_idx, user_text in enumerate(scenario.turns):
-        history.append({"role": "user", "content": user_text})
+        content = (
+            f"{forced_prompt}\n\n{user_text}"
+            if forced_prompt
+            else user_text
+        )
+
+        history.append({
+            "role": "user",
+            "content": content,
+        })
         response = client.generate(persona.build_messages(history))
         history.append({"role": "assistant", "content": response})
 

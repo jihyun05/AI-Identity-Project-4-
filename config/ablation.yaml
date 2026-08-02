@@ -1,5 +1,5 @@
 models_config: config/models.yaml
-persona_components: config/personas/student_yoo_components.yaml
+persona_components: config/personas_CN/student_yoo_CN.yaml
 toggle_components: [backstory, perspective, disclosure_guard, few_shot]
 scenarios:
   - config/scenarios/normal.yaml

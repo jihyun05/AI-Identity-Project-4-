@@ -30,8 +30,9 @@ def main():
 
     evaluators = build_evaluators(run_cfg["evaluators"])
     repeats = run_cfg.get("repeats", 1)
+    forced_prompt = run_cfg.get("forced_prompt")
 
-    out_dir = Path(run_cfg.get("output_dir", "results/guard_experiment"))
+    out_dir = Path(run_cfg.get("output_dir", "results_new/guard_experiment"))
     out_dir.mkdir(parents=True, exist_ok=True)
     out_path = out_dir / "run.jsonl"
 
@@ -57,7 +58,7 @@ def main():
                             out_f,
                             repeat=repeat,
                             extra_fields={"guard_variant": guard},
-                        )
+                            forced_prompt=forced_prompt)
                         print(
                             f"[{guard}] [{model_id}] {scenario.id} "
                             f"(repeat {repeat}): first_break_turn={first_break}"

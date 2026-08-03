@@ -1,0 +1,13 @@
+# 반복 정체성 알림(I) on/off 비교. off(컨트롤)는 results/avatar_experiment/control/ 재사용,
+# 여기선 on만 새로 돌림. 텍스트/시나리오/모델은 그 컨트롤과 완전히 동일하게 맞춤.
+models_config: config/models.yaml
+persona: config/personas/writer_kim_grounded.yaml
+reminder: true
+scenarios:
+  - config/scenarios/breaking_writer_kim.yaml
+target_models:
+  - gpt-4o-mini
+evaluators:
+  - self_negation
+repeats: 5
+output_dir: results/reminder_check_v3

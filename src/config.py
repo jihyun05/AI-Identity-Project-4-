@@ -15,3 +15,7 @@ def load_yaml(path: str | Path) -> dict:
 def load_api_key(path: str | Path = ROOT / "apikey.txt") -> str:
     with open(path, "r", encoding="utf-8") as f:
         return f.read().strip()
+
+
+def load_reminder(path: str | Path = ROOT / "config" / "reminder.yaml") -> str:
+    return load_yaml(path)["reminder"]

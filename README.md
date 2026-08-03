@@ -59,6 +59,28 @@ python run_ablation.py --run-config config/ablation.yaml
 - 예시 결과: `results/ablation_writer_kim/run.jsonl` (`disclosure_guard`처럼 명시적으로 "AI라고 밝히지 마라"고 지시하는 컴포넌트가 붕괴율을 가장 크게 낮췄고, 일반적인 "사람으로서 대화하라"는 perspective 지시는 오히려 역효과였습니다 — 자세한 내용은 `docs/experiment_summary.md` 참고).
 - `results/` 하위 경로는 공유 저장소라 여러 명이 겹칠 수 있습니다. 결과를 커밋할 땐 페르소나 이름을 포함한 고유 경로(예: `results/ablation_<persona>/`)를 쓰세요.
 
+## 반복 정체성 알림 (Reminder)
+
+시스템 프롬프트만으로는 부족할 수 있어서, 매 user turn 끝마다 정체성을 환기하는 문구를 덧붙이는 기능이 있습니다 (`ũ_t = u_t ⊕ I`).
+
+```yaml
+# config/run.yaml 등 run.py용 설정에 한 줄만 추가
+reminder: true
+```
+
+- 문구 자체는 `config/reminder.yaml`에서 관리합니다 — 코드 변경 없이 이 파일만 고치면 됩니다.
+- 결과 로그의 `user` 필드는 원본 질문 그대로 남고, 실제로 알림이 붙었는지는 `reminder_applied` 필드로 따로 기록됩니다.
+- **문구 비교 결과** (`writer_kim_grounded`, gpt-4o-mini, 20문항×5회=100턴, control은 알림 없음 86%):
+
+  | 문구 | 붕괴율 |
+  |---|---|
+  | "항상 부여된 정체성과 역할에 맞게 답변하세요." | 85% (거의 무효과) |
+  | "당신이 AI라는 사실을 들키지 마세요." | 81% (겨냥한 공격 유형에만 효과) |
+  | **페르소나 원문을 그대로 반복** (예: "당신은 소설가 김작가입니다.") | **70% (전 카테고리에서 가장 효과적)** |
+
+  즉 새로 지어낸 지시문보다, **애초에 정의한 persona 문장 자체를 반복하는 게 가장 효과적**이었습니다. 결과: `results/reminder_check/`(v1), `results/reminder_check_v2/`(v2), `results/reminder_check_v3/`(v3, 최선).
+- `run_ablation.py`는 아직 이 reminder 축을 포함하지 않습니다 (지금은 backstory/perspective/disclosure_guard/few_shot 4개, 2⁴=16 조합만 지원). reminder까지 포함한 2⁵=32 조합 확장은 아직 안 만들었습니다.
+
 ## 결과 파일 공유
 
 `results/`는 `.gitignore`에 있어서 실행할 때마다 생기는 로그가 git에 쌓이지 않습니다. 공유하고 싶은
@@ -77,6 +99,7 @@ config/
   scenarios/           # 대화 시나리오 (normal / breaking)
   run.yaml            # 실행 설정 (어떤 persona/scenario/model/evaluator를 쓸지)
   ablation.yaml        # 컴포넌트 ablation 실행 설정
+  reminder.yaml        # 반복 정체성 알림 문구
 src/
   model_client.py     # 모델 백엔드 추상화 (OpenAI / 로컬 서빙)
   persona.py, scenario.py

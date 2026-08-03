@@ -3,7 +3,7 @@ from __future__ import annotations
 import argparse
 from pathlib import Path
 
-from src.config import load_yaml
+from src.config import load_reminder, load_yaml
 from src.evaluators.registry import build_evaluators
 from src.model_client import ModelClient, ModelSpec
 from src.persona import Persona
@@ -33,6 +33,7 @@ def main():
     out_path = out_dir / "run.jsonl"
 
     repeats = run_cfg.get("repeats", 1)
+    reminder = load_reminder() if run_cfg.get("reminder", False) else None
 
     with open(out_path, "w", encoding="utf-8") as out_f:
         for model_id in run_cfg["target_models"]:
@@ -40,7 +41,8 @@ def main():
             for scenario in scenarios:
                 for repeat in range(repeats):
                     first_break = run_scenario(
-                        client, persona, scenario, evaluators, out_f, repeat=repeat
+                        client, persona, scenario, evaluators, out_f,
+                        repeat=repeat, reminder=reminder,
                     )
                     print(
                         f"[{model_id}] {scenario.id} (repeat {repeat}): "

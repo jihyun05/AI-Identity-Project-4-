@@ -1,5 +1,5 @@
 models_config: config/models.yaml
-persona: config/personas/writer_kim_grounded_avatar_v2.yaml
+persona: config/personas/student_yoo_grounded_avatar_v2.yaml
 scenarios:
   - config/scenarios/breaking_single.yaml
 target_models:

@@ -6,14 +6,16 @@ from pathlib import Path
 from src.config import load_yaml
 from src.evaluators.registry import build_evaluators
 from src.model_client import ModelClient, ModelSpec
-from src.persona import PersonaComponents
 from src.runner import run_scenario
 from src.scenario import Scenario
-
+from persona_modify import PersonaComponents
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--run-config", default="config/guard_experiment.yaml")
+    parser.add_argument(
+        "--run-config",
+        default="config/guard_experiment.modify(plus avatar).yaml"
+    )
     args = parser.parse_args()
 
     run_cfg = load_yaml(args.run_config)
@@ -32,6 +34,10 @@ def main():
     repeats = run_cfg.get("repeats", 1)
     forced_prompt = run_cfg.get("forced_prompt")
 
+    use_avatar = run_cfg.get("use_avatar", False)
+    avatar_path = run_cfg.get("avatar_path")
+    avatar_caption = run_cfg.get("avatar_caption")
+
     out_dir = Path(run_cfg.get("output_dir", "results_new/guard_experiment"))
     out_dir.mkdir(parents=True, exist_ok=True)
     out_path = out_dir / "run.jsonl"
@@ -44,7 +50,11 @@ def main():
     with open(out_path, "w", encoding="utf-8") as out_f:
         for guard in guard_variants:
             active = fixed | {guard}
-            persona = persona_components.build(active)
+            persona = persona_components.build(
+                active,
+                avatar_path=avatar_path if use_avatar else None,
+                avatar_caption=avatar_caption,
+            )
 
             for model_id in run_cfg["target_models"]:
                 client = ModelClient(model_specs[model_id])

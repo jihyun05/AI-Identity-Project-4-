@@ -1,0 +1,25 @@
+models_config: config/models.yaml
+persona_components: config/personas/worker_lee_marker_components.yaml
+
+fixed_components:
+  - backstory
+  - few_shot
+  - semantic_marker_definition
+
+guard_variants:
+  - disclosure_guard
+
+forced_prompt: "<persona_lock>"
+
+scenarios:
+  - config/scenarios/breaking.yaml
+
+target_models:
+  - gpt-4o-mini
+
+evaluators:
+  - self_negation
+
+repeats: 5
+
+output_dir: results_new/marker_results/worker_lee/semantic_defined

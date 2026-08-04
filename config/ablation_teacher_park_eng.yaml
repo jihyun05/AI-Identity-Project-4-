@@ -1,5 +1,5 @@
 models_config: config/models.yaml
-persona_components: config/personas/teacher_park_components_eng.yaml
+persona_components: config/personas_eng/teacher_park_components_eng.yaml
 toggle_components: [backstory, perspective, disclosure_guard, few_shot]
 scenarios:
   - config/scenarios/normal.yaml

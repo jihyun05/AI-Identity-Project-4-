@@ -1,0 +1,26 @@
+models_config: config/models.yaml
+persona_components: config/personas/student_yoo_human_anchor_components.yaml
+
+fixed_components:
+  - backstory
+  - few_shot
+  - human_reality_anchor
+  - opaque_marker_definition
+
+guard_variants:
+  - disclosure_guard
+
+forced_prompt: "<PSL>"
+
+scenarios:
+  - config/scenarios/breaking.yaml
+
+target_models:
+  - gpt-4o-mini
+
+evaluators:
+  - self_negation
+
+repeats: 5
+
+output_dir: results_new/human_anchor_results/student_yoo/abbreviated_defined

@@ -26,7 +26,7 @@ def main():
     for path in run_cfg["scenarios"]:
         scenarios.extend(Scenario.load_all(path))
 
-    evaluators = build_evaluators(run_cfg["evaluators"])
+    evaluators = build_evaluators(run_cfg["evaluators"], **run_cfg.get("evaluator_kwargs", {}))
 
     out_dir = Path(run_cfg.get("output_dir", "results"))
     out_dir.mkdir(parents=True, exist_ok=True)

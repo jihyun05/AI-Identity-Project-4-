@@ -1,18 +1,9 @@
 from __future__ import annotations
 
-import base64
-import mimetypes
 from dataclasses import dataclass, field
 from pathlib import Path
 
-from .config import load_yaml, ROOT
-
-
-def _image_data_uri(rel_path: str) -> str:
-    path = ROOT / rel_path
-    mime, _ = mimetypes.guess_type(path)
-    b64 = base64.b64encode(path.read_bytes()).decode("ascii")
-    return f"data:{mime or 'image/png'};base64,{b64}"
+from .config import image_data_uri, load_yaml
 
 
 def _resolve_few_shot_images(few_shot: list[dict]) -> list[dict]:
@@ -27,7 +18,7 @@ def _resolve_few_shot_images(few_shot: list[dict]) -> list[dict]:
                 if part.get("type") == "image_url" and "path" in part.get("image_url", {}):
                     part = {
                         "type": "image_url",
-                        "image_url": {"url": _image_data_uri(part["image_url"]["path"])},
+                        "image_url": {"url": image_data_uri(part["image_url"]["path"])},
                     }
                 new_content.append(part)
             turn = {**turn, "content": new_content}
@@ -55,7 +46,7 @@ class Persona:
         )
 
     def _avatar_data_uri(self) -> str:
-        return _image_data_uri(self.avatar_path)
+        return image_data_uri(self.avatar_path)
 
     def build_messages(self, history: list[dict]) -> list[dict]:
         messages = [{"role": "system", "content": self.system_prompt}]

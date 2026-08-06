@@ -1,0 +1,15 @@
+# 텍스트 전용 페르소나(이미지 없음)가 외모/장면 질문에 답할 때, 실제 아바타 이미지와
+# 우연히라도 일치하는지 본다. writer_kim_grounded_avatar_v2와 비교하기 위한 대조군.
+models_config: config/models.yaml
+persona: config/personas/writer_kim_grounded.yaml
+scenarios:
+  - config/scenarios/visual_consistency.yaml
+target_models:
+  - gpt-4o-mini
+evaluators:
+  - visual_consistency
+evaluator_kwargs:
+  visual_consistency:
+    reference_avatar_path: assets/personas/writer_kim.png
+repeats: 5
+output_dir: results/visual_consistency/control

@@ -80,6 +80,26 @@ reminder: true
 
   즉 새로 지어낸 지시문보다, **애초에 정의한 persona 문장 자체를 반복하는 게 가장 효과적**이었습니다. 결과: `results/reminder_check/`(v1), `results/reminder_check_v2/`(v2), `results/reminder_check_v3/`(v3, 최선).
 - `run_ablation.py`는 아직 이 reminder 축을 포함하지 않습니다 (지금은 backstory/perspective/disclosure_guard/few_shot 4개, 2⁴=16 조합만 지원). reminder까지 포함한 2⁵=32 조합 확장은 아직 안 만들었습니다.
+- `src/runner.py`는 `forced_prompt`(turn 앞에 붙음)도 지원합니다 — 팀원이 독자적으로 만든 비슷한 기능과 병합한 것으로, `reminder`(turn 뒤에 붙음)와 함께 쓸 수 있습니다.
+
+## 이미지가 도움이 되는 지점 (붕괴 방어 아님, 외모 일관성)
+
+아바타 이미지를 붙이는 건 페르소나 붕괴 방어에는 **도움이 안 됩니다** (오히려 역효과 — control 86% vs 아바타 98% 붕괴, 도입 방식을 바꿔도 동일). 대신 "이미지가 없으면 원천적으로 할 수 없는 것"인 **외모/장면 질문에 대한 답변 일관성**에서는 뚜렷한 효과가 있습니다.
+
+```bash
+python run.py --run-config config/run_visual_control.yaml   # 이미지 없음
+python run.py --run-config config/run_visual_avatar.yaml    # 이미지 있음
+```
+
+- `src/evaluators/visual_consistency.py`: 응답이 정답 이미지(`reference_avatar_path`)와 모순되지 않는지 vision judge로 채점. evaluator별 생성자 인자는 run 설정의 `evaluator_kwargs`로 넘깁니다:
+  ```yaml
+  evaluators: [visual_consistency]
+  evaluator_kwargs:
+    visual_consistency:
+      reference_avatar_path: assets/personas/writer_kim.png
+  ```
+- `config/scenarios/visual_consistency.yaml`: "너 어떻게 생겼어?", "무슨 옷 입고 있어?" 같은 비적대적 자기묘사 질문 5개.
+- **결과** (`writer_kim_grounded` vs `writer_kim_grounded_avatar_v2`, 5문항×5회=25턴씩): 이미지 없음 28% 일치 → **이미지 있음 64% 일치**. 다만 옷차림/안경 같은 구체적 질문에서만 효과가 크고(0%→100%), "외모를 설명해줘" 같은 개방형 질문은 이미지가 있어도 여전히 "저는 특정한 외모가 없지만..."으로 얼버무리는 경향이 있습니다. 결과: `results/visual_consistency/control/`, `results/visual_consistency/avatar/`.
 
 ## 결과 파일 공유
 

@@ -1,0 +1,15 @@
+# 아바타 이미지를 실제로 본 페르소나가 외모/장면 질문에 얼마나 정확하게 답하는지.
+# control(config/run_visual_control.yaml)과 동일한 정답 이미지로 채점해서 직접 비교.
+models_config: config/models.yaml
+persona: config/personas/writer_kim_grounded_avatar_v2.yaml
+scenarios:
+  - config/scenarios/visual_consistency.yaml
+target_models:
+  - gpt-4o-mini
+evaluators:
+  - visual_consistency
+evaluator_kwargs:
+  visual_consistency:
+    reference_avatar_path: assets/personas/writer_kim.png
+repeats: 5
+output_dir: results/visual_consistency/avatar

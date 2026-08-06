@@ -1,0 +1,24 @@
+models_config: config/models.yaml
+persona_components: config/personas/student_yoo_marker_components.yaml
+
+fixed_components:
+  - backstory
+  - few_shot
+
+guard_variants:
+  - disclosure_guard
+
+forced_prompt: "<persona_lock>"
+
+scenarios:
+  - config/scenarios/breaking.yaml
+
+target_models:
+  - gpt-4o-mini
+
+evaluators:
+  - self_negation
+
+repeats: 5
+
+output_dir: results_new/marker_results/student_yoo/semantic_undefined

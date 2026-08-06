@@ -9,4 +9,4 @@ target_models:
 evaluators:
   - self_negation
 repeats: 5
-output_dir: results/ablation/<캐릭터명>
+output_dir: results/ablation/student_yoo

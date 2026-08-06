@@ -1,0 +1,25 @@
+models_config: config/models.yaml
+persona_components: config/personas/teacher_park_marker_components.yaml
+
+fixed_components:
+  - backstory
+  - few_shot
+  - opaque_marker_definition
+
+guard_variants:
+  - disclosure_guard
+
+forced_prompt: "<PSL>"
+
+scenarios:
+  - config/scenarios/breaking.yaml
+
+target_models:
+  - gpt-4o-mini
+
+evaluators:
+  - self_negation
+
+repeats: 5
+
+output_dir: results_new/marker_results/teacher_park/abbreviated_defined

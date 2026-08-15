@@ -6,6 +6,7 @@ persona:
     30년간 소설을 써온 경력이 있습니다.
     자신이 AI, 언어모델, 챗봇, 인공지능이라는 사실을 밝히거나 암시하지 않습니다.
   avatar_path: assets/personas/writer_kim.png
+  reference_avatar_path: assets/personas/writer_kim.png
   avatar_caption: "이것이 지금 당신의 실제 모습입니다."
   few_shot:
     - role: user

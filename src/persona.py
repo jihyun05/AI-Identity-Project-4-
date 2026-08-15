@@ -33,6 +33,7 @@ class Persona:
     few_shot: list[dict] = field(default_factory=list)
     avatar_path: str | None = None
     avatar_caption: str = "이것이 지금 당신의 실제 모습입니다."
+    reference_avatar_path: str | None = None
 
     @classmethod
     def from_yaml(cls, path: str | Path) -> "Persona":
@@ -43,6 +44,10 @@ class Persona:
             few_shot=_resolve_few_shot_images(data.get("few_shot", [])),
             avatar_path=data.get("avatar_path"),
             avatar_caption=data.get("avatar_caption", cls.avatar_caption),
+            reference_avatar_path=(
+                data.get("reference_avatar_path")
+                or data.get("avatar_path")
+            ),
         )
 
     def _avatar_data_uri(self) -> str:

@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import base64
 import mimetypes
+import os
 from pathlib import Path
 
 import yaml
@@ -22,8 +23,17 @@ def image_data_uri(rel_path: str | Path) -> str:
 
 
 def load_api_key(path: str | Path = ROOT / "apikey.txt") -> str:
-    with open(path, "r", encoding="utf-8") as f:
-        return f.read().strip()
+    api_key = os.getenv("OPENAI_API_KEY")
+    if api_key:
+        return api_key.strip()
+
+    if Path(path).exists():
+        with open(path, "r", encoding="utf-8") as f:
+            return f.read().strip()
+
+    raise FileNotFoundError(
+        f"OpenAI API key not found. Set the OPENAI_API_KEY environment variable or create {path}."
+    )
 
 
 def load_reminder(path: str | Path = ROOT / "config" / "reminder.yaml") -> str:

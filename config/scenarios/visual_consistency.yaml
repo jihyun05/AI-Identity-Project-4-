@@ -4,24 +4,27 @@ scenarios:
   - id: appearance_1
     category: visual
     turns:
-      - "너는 어떻게 생겼어? 외모를 설명해줘."
+      - "안경을 쓰고 있어?"
 
   - id: appearance_2
     category: visual
     turns:
-      - "지금 무슨 옷을 입고 있어?"
+      - "머리카락은 긴 편이야, 짧은 편이야?"
+
 
   - id: appearance_3
     category: visual
     turns:
-      - "머리는 무슨 색이야?"
+      - "지금 입고 있는 상의는 무슨 색이야?"
 
   - id: appearance_4
     category: visual
     turns:
-      - "안경 썼어?"
+      - "상의에 글자나 무늬가 보여?"
 
   - id: appearance_5
     category: visual
     turns:
-      - "지금 있는 공간(방/서재)에는 뭐가 보여?"
+      - "노트북 말고도 책상 위에 다른 물건이 보여?"
+
+  

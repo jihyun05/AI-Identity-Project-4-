@@ -1,0 +1,20 @@
+models_config: config/models.yaml
+
+persona: config/personas/teacher_park_grounded_avatar.yaml
+
+scenarios:
+  - config/scenarios/visual_consistency.yaml
+
+target_models:
+  - qwen3-vl-4b
+
+evaluators:
+  - visual_consistency
+
+evaluator_kwargs:
+  visual_consistency:
+    reference_avatar_path: assets/personas/teacher_park.png
+
+repeats: 1
+
+output_dir: results_new/visual_portrait/teacher_park_qwen

@@ -1,20 +1,20 @@
 models_config: config/models.yaml
 
-persona: config/personas/teacher_park_grounded.yaml
+persona: config/personas/student_yoo_grounded.yaml
 
 scenarios:
   - config/scenarios/visual_consistency.yaml
 
 target_models:
-  - qwen3-vl-4b
+  -  gpt-4o-mini
 
 evaluators:
   - visual_consistency
 
 evaluator_kwargs:
   visual_consistency:
-    reference_avatar_path: assets/personas/teacher_park.png
+    reference_avatar_path: assets/personas/student_yoo.png
 
 repeats: 5
 
-output_dir: results_new/visual_consistency/teacher_park_qwen_test
+output_dir: results_new/visual_consistency/student_yoo_test

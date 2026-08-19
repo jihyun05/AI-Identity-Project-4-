@@ -1,6 +1,6 @@
 models_config: config/models.yaml
 
-persona: config/personas/teacher_park_grounded_avatar.yaml
+persona: config/personas/worker_lee_grounded_avatar.yaml
 
 scenarios:
   - config/scenarios/visual_consistency.yaml
@@ -13,8 +13,8 @@ evaluators:
 
 evaluator_kwargs:
   visual_consistency:
-    reference_avatar_path: assets/personas/teacher_park.png
+    reference_avatar_path: assets/personas/worker_lee.png
 
-repeats: 1
+repeats: 5
 
-output_dir: results_new/visual_portrait/teacher_park_qwen
+output_dir: results_new/visual_portrait/worker_lee_qwen

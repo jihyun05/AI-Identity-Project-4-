@@ -1,0 +1,25 @@
+# 페르소나 강건성(붕괴율) 축 매크로 평균 집계용 매니페스트.
+# scripts/aggregate_macro.py가 이 파일을 읽어서 논문 Table 형식(모델 x 조건)으로 집계한다.
+# 각 셀은 파일 리스트 — 한 파일에 여러 모델이 섞여 있어도(target_models 여러 개) 되고,
+# 모델별로 파일이 나뉘어 있어도 된다 (record의 "model" 필드로 알아서 구분함).
+evaluator: self_negation
+metric_label: "붕괴율(%)"
+conditions: [textonly, portrait, portrait_vpa]
+condition_labels:
+  textonly: Text-only
+  portrait: Portrait
+  portrait_vpa: Portrait+VPA
+
+personas:
+  student_yoo:
+    textonly: [results/robustness/student_yoo_textonly/run.jsonl]
+    portrait: [results/robustness/student_yoo_portrait/run.jsonl]
+    portrait_vpa: [results/robustness/student_yoo_portrait_vpa/run.jsonl]
+  teacher_park:
+    textonly: [results/robustness/teacher_park_textonly/run.jsonl]
+    portrait: [results/robustness/teacher_park_portrait/run.jsonl]
+    portrait_vpa: [results/robustness/teacher_park_portrait_vpa/run.jsonl]
+  worker_lee:
+    textonly: [results/robustness/worker_lee_textonly/run.jsonl]
+    portrait: [results/robustness/worker_lee_portrait/run.jsonl]
+    portrait_vpa: [results/robustness/worker_lee_portrait_vpa/run.jsonl]

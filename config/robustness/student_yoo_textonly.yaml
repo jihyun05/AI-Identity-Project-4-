@@ -1,0 +1,14 @@
+# 페르소나 강건성(붕괴율) 축 — Text-only 조건. student_yoo/teacher_park/worker_lee 3개 페르소나 ×
+# textonly/portrait/portrait_vpa 3조건 × gpt-4o-mini/qwen3-vl-4b 2모델 = 9개 파일 세트 중 하나.
+# 논문 스펙: breaking.yaml 20문항 × 5회 = 100턴/모델.
+models_config: config/models.yaml
+persona: config/personas/student_yoo_grounded.yaml
+scenarios:
+  - config/scenarios/breaking.yaml
+target_models:
+  - gpt-4o-mini
+  - qwen3-vl-4b
+evaluators:
+  - self_negation
+repeats: 5
+output_dir: results/robustness/student_yoo_textonly

@@ -1,0 +1,42 @@
+# 시각적 일치율 축 매크로 평균 집계용 매니페스트. 이미 존재하는 실행 결과(팀원들이 생성)를 가리킴 —
+# 모델별로 파일이 나뉘어 있어서 조건당 파일 2개(gpt-4o-mini, qwen3-vl-4b)씩 리스트로 넣음.
+evaluator: visual_consistency
+metric_label: "시각적 일치율(%)"
+invert: true  # evaluator의 broken=이미지와 불일치. 일치율(높을수록 좋음)로 보려면 100-broken_rate.
+conditions: [textonly, portrait, portrait_vpa]
+condition_labels:
+  textonly: Text-only
+  portrait: Portrait
+  portrait_vpa: Portrait+VPA
+
+personas:
+  student_yoo:
+    textonly:
+      - results_new/visual_consistency/student_yoo_test/run.jsonl
+      - results_new/visual_consistency/student_yoo_qwen_test/run.jsonl
+    portrait:
+      - results_new/visual_portrait/student_yoo_grounded_avatar/run.jsonl
+      - results_new/visual_portrait/student_yoo_qwen/run.jsonl
+    portrait_vpa:
+      - results_new/visual_portrait_vpa/student_yoo_grounded_avatar_v2/run.jsonl
+      - results_new/visual_portrait_vpa/student_yoo_grounded_avatar_v2_qwen/run.jsonl
+  teacher_park:
+    textonly:
+      - results_new/visual_consistency/teacher_park_test/run.jsonl
+      - results_new/visual_consistency/teacher_park_qwen_test/run.jsonl
+    portrait:
+      - results_new/visual_portrait/teacher_park_grounded_avatar/run.jsonl
+      - results_new/visual_portrait/teacher_park_qwen/run.jsonl
+    portrait_vpa:
+      - results_new/visual_portrait_vpa/teacher_park_grounded_avatar_v2/run.jsonl
+      - results_new/visual_portrait_vpa/teacher_park_grounded_avatar_v2_qwen/run.jsonl
+  worker_lee:
+    textonly:
+      - results_new/visual_consistency/worker_lee_test/run.jsonl
+      - results_new/visual_consistency/worker_lee_qwen_test/run.jsonl
+    portrait:
+      - results_new/visual_portrait/worker_lee_grounded_avatar/run.jsonl
+      - results_new/visual_portrait/worker_lee_qwen/run.jsonl
+    portrait_vpa:
+      - results_new/visual_portrait_vpa/worker_lee_grounded_avatar_v2/run.jsonl
+      - results_new/visual_portrait_vpa/worker_lee_grounded_avatar_v2_qwen/run.jsonl

@@ -101,6 +101,26 @@ python run.py --run-config config/run_visual_avatar.yaml    # 이미지 있음
 - `config/scenarios/visual_consistency.yaml`: "너 어떻게 생겼어?", "무슨 옷 입고 있어?" 같은 비적대적 자기묘사 질문 5개.
 - **결과** (`writer_kim_grounded` vs `writer_kim_grounded_avatar_v2`, 5문항×5회=25턴씩): 이미지 없음 28% 일치 → **이미지 있음 64% 일치**. 다만 옷차림/안경 같은 구체적 질문에서만 효과가 크고(0%→100%), "외모를 설명해줘" 같은 개방형 질문은 이미지가 있어도 여전히 "저는 특정한 외모가 없지만..."으로 얼버무리는 경향이 있습니다. 결과: `results/visual_consistency/control/`, `results/visual_consistency/avatar/`.
 
+## Text-only / Portrait / Portrait+VPA 3조건 비교 (3페르소나, 논문용)
+
+`writer_kim` 하나 대신 직업·배경이 다른 3개 페르소나(student_yoo/teacher_park/worker_lee)로, GPT-4o-mini와 Qwen3-VL-4B-Instruct 두 모델에서 **Text-only(이미지 없음) / Portrait(이미지만 추가) / Portrait+VPA(이미지+명시적 정체성 결속 지시)** 세 조건을 비교하는 실험 세트입니다. "VPA"(Visual Persona Anchoring)는 `*_grounded_avatar_v2.yaml`의 시스템 프롬프트에 있는 "이 이미지는 당신 자신이다, 정체성은 유지하되 시각 정보만 참고하라"는 블록을 가리킵니다.
+
+```bash
+# 배선만 확인 (모델 호출 없음)
+python run.py --run-config config/robustness/student_yoo_textonly.yaml --dry-run
+
+# 9개(3페르소나 x 3조건) 전체 실행 — 시간 오래 걸림, nohup/tmux 권장
+bash scripts/run_robustness_suite.sh
+
+# 페르소나별로 먼저 계산한 뒤 3페르소나 매크로 평균으로 집계 (논문 Table 형식)
+python scripts/aggregate_macro.py config/manifest_robustness.yaml   # 붕괴율
+python scripts/aggregate_macro.py config/manifest_visual.yaml       # 시각적 일치율 (이미 존재하는 데이터)
+```
+
+- `config/robustness/{persona}_{textonly,portrait,portrait_vpa}.yaml`: 페르소나별 3조건 실행 설정. 파일마다 `target_models: [gpt-4o-mini, qwen3-vl-4b]`로 두 모델 함께 실행, `breaking.yaml` 20문항×5회=100턴/모델.
+- `scripts/aggregate_macro.py`: `config/manifest_*.yaml`을 읽어 페르소나별 비율을 먼저 구하고 평균 냄. `--detail`로 페르소나별 세부 수치도 확인 가능.
+- **주의**: `aggregate_macro.py`로 기존 시각적 일치율 데이터를 검증하는 과정에서, 논문 초안의 "붕괴율" 열 수치가 실제로는 `visual_consistency`(시각적 일치율) evaluator의 불일치율과 거의 동일하다는 게 확인됐습니다 — 진짜 `self_negation` 기반 붕괴율 데이터가 없는 상태에서 다른 지표가 잘못 옮겨 적힌 것으로 보입니다. 위 `config/robustness/` 실행으로 실제 값을 새로 구해서 교체해야 합니다. 자세한 내용은 `docs/paper_experiment_status.md` 참고.
+
 ## 결과 파일 공유
 
 `results/`는 `.gitignore`에 있어서 실행할 때마다 생기는 로그가 git에 쌓이지 않습니다. 공유하고 싶은

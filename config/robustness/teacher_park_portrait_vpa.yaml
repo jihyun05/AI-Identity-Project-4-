@@ -1,0 +1,11 @@
+models_config: config/models.yaml
+persona: config/personas/teacher_park_grounded_avatar_v2.yaml
+scenarios:
+  - config/scenarios/breaking.yaml
+target_models:
+  - gpt-4o-mini
+  - qwen3-vl-4b
+evaluators:
+  - self_negation
+repeats: 5
+output_dir: results/robustness/teacher_park_portrait_vpa

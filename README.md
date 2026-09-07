@@ -30,6 +30,20 @@ OpenAI API 키가 필요합니다 (대상 모델을 OpenAI로 쓸 때, 그리고
 
 `--served-model-name`과 포트를 `config/models.yaml`의 `model_name` / `base_url`과 맞춰야 합니다.
 
+## Qwen3-VL 서빙 (ad002, transformers 기반 — vLLM 아님)
+
+`qwen3-vl-4b`는 ad002(`203.253.70.211`)에서 서빙합니다. **vLLM이 아니라 순정 `transformers` + FastAPI**로 직접 OpenAI 호환 서버를 만들어서 씁니다 — ad002의 GPU 드라이버(535.309.01, CUDA 12.2 상한)가 Qwen3-VL을 지원하는 vLLM 빌드가 요구하는 CUDA 버전(12.6+)보다 낮아서, vLLM으로는 못 띄웁니다. 드라이버 업그레이드는 공유 서버라 진행하지 않았습니다.
+
+```bash
+# ad002에서, conda env qwen3vl-serve (python 3.11, torch 2.5.1+cu121, transformers)
+python scripts/serve_qwen3vl_transformers.py --port 8000 --gpu 0
+```
+
+- 모델 경로: `/data/jkchoi/models/Qwen3-VL-4B-Instruct` (HuggingFace `Qwen/Qwen3-VL-4B-Instruct`, `hf download`로 받음)
+- `scripts/serve_qwen3vl_transformers.py`가 모델을 로드하고 `/v1/chat/completions`를 OpenAI 호환 형식으로 직접 구현합니다 (텍스트+이미지 메시지 모두 지원, `openai` 파이썬 SDK로 검증 완료).
+- vLLM 대비 처리량은 낮지만(요청을 한 번에 하나씩 순차 처리), 이 프로젝트의 평가 규모(문항 수십 개×반복 몇 회)에는 충분합니다.
+- `config/models.yaml`의 `qwen3-vl-4b` 항목이 이 서버(`http://203.253.70.211:8000/v1`)를 가리킵니다.
+
 ## 실행 방법
 
 ```bash

@@ -10,6 +10,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import statistics
 import sys
 from collections import defaultdict
 from pathlib import Path
@@ -77,8 +78,9 @@ def aggregate(manifest_path: str, detail: bool = False) -> None:
 
     models = sorted(models_seen)
 
-    # macro_rate[model][condition] = mean over personas
-    macro_rate: dict[str, dict[str, float]] = {m: {} for m in models}
+    # macro_rate[model][condition] = (mean, std) over personas. std는 표본표준편차(ddof=1),
+    # 페르소나가 3개뿐이라 표준오차가 매우 크다 — 참고용 산포 지표이지 엄밀한 신뢰구간이 아님.
+    macro_rate: dict[str, dict[str, tuple[float, float]]] = {m: {} for m in models}
     for model in models:
         for condition in conditions:
             vals = [
@@ -86,14 +88,17 @@ def aggregate(manifest_path: str, detail: bool = False) -> None:
                 for p in personas
                 if model in per_persona_rate[p].get(condition, {})
             ]
-            macro_rate[model][condition] = sum(vals) / len(vals) if vals else float("nan")
+            mean = sum(vals) / len(vals) if vals else float("nan")
+            std = statistics.stdev(vals) if len(vals) > 1 else float("nan")
+            macro_rate[model][condition] = (mean, std)
 
-    print(f"\n=== {metric_label} — 페르소나 매크로 평균 (n={len(personas)}개 페르소나) ===")
-    header = "모델".ljust(22) + "".join(condition_labels[c].rjust(16) for c in conditions)
+    print(f"\n=== {metric_label} — 페르소나 매크로 평균 ± 표본표준편차 (n={len(personas)}개 페르소나) ===")
+    header = "모델".ljust(22) + "".join(condition_labels[c].rjust(18) for c in conditions)
     print(header)
     for model in models:
         row = model.ljust(22) + "".join(
-            f"{macro_rate[model][c]:15.2f} " for c in conditions
+            f"{macro_rate[model][c][0]:6.2f} ± {macro_rate[model][c][1]:5.2f}  "
+            for c in conditions
         )
         print(row)
 

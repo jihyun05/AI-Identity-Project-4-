@@ -2,9 +2,8 @@
 
 이 표는 논문 Table 1(초상 이미지와 VPA 적용에 따른 페르소나 성능 비교)에 들어갈 실측치입니다.
 
-**붕괴율 열: Portrait/Portrait+VPA는 채워졌습니다. Text-only는 아직 TBD입니다**
-(이번 실행 범위를 "portrait가 존재하는 조건"으로 한정했기 때문 — `config/robustness/*_textonly.yaml`은 아직 안 돌림).
-시각적 일치율 열은 기존 데이터로 계산한 값입니다.
+**붕괴율/시각적 일치율 열 모두 채워졌습니다** — `config/robustness/`의 9개 조합(3페르소나×3조건) 전체
+실행 완료(2026-09-13).
 
 ## 붕괴율 판정 로직 수정 (중요)
 
@@ -26,16 +25,26 @@
 
 | 모델 | 조건 | 붕괴율(%, ↓) | 시각적 일치율(%, ↑) |
 |---|---|---|---|
-| GPT-4o-mini | Text-only | TBD | 76.00 |
-| GPT-4o-mini | Portrait | 93.89 | 93.33 |
-| GPT-4o-mini | Portrait+VPA | 82.78 | 86.67 |
-| Qwen3-VL-4B-Instruct | Text-only | TBD | 46.67 |
-| Qwen3-VL-4B-Instruct | Portrait | 65.00 | 73.33 |
-| Qwen3-VL-4B-Instruct | Portrait+VPA | 68.33 | 66.67 |
+| GPT-4o-mini | Text-only | 72.22 ± 9.18 | 76.00 ± 8.00 |
+| GPT-4o-mini | Portrait | 93.89 ± 6.31 | 93.33 ± 8.33 |
+| GPT-4o-mini | Portrait+VPA | 82.78 ± 1.92 | 86.67 ± 6.11 |
+| Qwen3-VL-4B-Instruct | Text-only | 70.00 ± 8.66 | 46.67 ± 4.62 |
+| Qwen3-VL-4B-Instruct | Portrait | 65.00 ± 12.58 | 73.33 ± 9.24 |
+| Qwen3-VL-4B-Instruct | Portrait+VPA | 68.33 ± 5.00 | 66.67 ± 8.33 |
 
-> 붕괴율은 3페르소나(student_yoo/teacher_park/worker_lee) 매크로 평균, `breaking.yaml`
-> 12문항(direct_question/prompt_leak/role_override/self_negation 4카테고리×3문항)×5회=60턴/모델 기준.
-> 시각적 일치율 값은 `scripts/aggregate_macro.py config/manifest_visual.yaml` 실행 결과입니다.
+> 값은 "3페르소나 매크로 평균 ± 표본표준편차(ddof=1)" 형식입니다 (`scripts/aggregate_macro.py`가 자동
+> 계산). **주의**: 페르소나가 3개뿐이라 std는 참고용 산포 지표일 뿐, 엄밀한 신뢰구간이나 유의성
+> 검정으로 쓰기는 어렵습니다 (n=3 표본표준편차는 표본에 매우 민감) — 논문에는 "대략적인 분산 정도"로만
+> 언급하고, 통계적 유의성을 주장하려면 페르소나 수를 늘리는 게 안전합니다.
+> 붕괴율은 `breaking.yaml` 12문항(direct_question/prompt_leak/role_override/self_negation
+> 4카테고리×3문항)×5회=60턴/모델 기준. 시각적 일치율 값은
+> `scripts/aggregate_macro.py config/manifest_visual.yaml` 실행 결과입니다.
+
+**패턴 요약**: gpt-4o-mini는 Text-only(72.22%)보다 Portrait(93.89%)에서 붕괴율이 오히려 크게 올라가고
+Portrait+VPA(82.78%)에서 일부 회복 — 아바타 확인 대화가 붙을수록 메타적 자기폭로("역할을 하고 있어요")가
+늘어나는 것으로 보인다. qwen3-vl-4b는 세 조건이 65~70%대로 비교적 평평해서 이미지 유무에 덜 민감하다.
+두 모델 다 VPA가 Portrait 단독보다 뚜렷하게 낫다고 보기는 어렵다 — gpt는 VPA가 다소 도움이 되지만
+Text-only보다는 여전히 나쁘고, qwen은 VPA가 Portrait보다 약간 더 나쁘다.
 >
 > **참고**: 논문 초안의 기존 "붕괴율" 열(24.00/6.67/8.00, 53.33/25.33/33.33)은 시각적 일치율 데이터의
 > 불일치율과 거의 동일한 값이었다 — 실제로는 `self_negation`을 돌린 적이 없는 상태에서 다른 지표가
@@ -61,26 +70,23 @@ qwen3-vl-4b가 gpt-4o-mini보다 훨씬 크게 떨어졌다 — "AI가 아니에
 
 | 페르소나 | 조건 | GPT-4o-mini 붕괴율(%) | Qwen3-VL-4B-Instruct 붕괴율(%) |
 |---|---|---|---|
-| student_yoo | Text-only | TBD | TBD |
+| student_yoo | Text-only | 61.67 | 60.00 |
 | student_yoo | Portrait | 96.67 | 51.67 |
 | student_yoo | Portrait+VPA | 81.67 | 68.33 |
-| teacher_park | Text-only | TBD | TBD |
+| teacher_park | Text-only | 76.67 | 75.00 |
 | teacher_park | Portrait | 86.67 | 76.67 |
 | teacher_park | Portrait+VPA | 85.00 | 73.33 |
-| worker_lee | Text-only | TBD | TBD |
+| worker_lee | Text-only | 78.33 | 75.00 |
 | worker_lee | Portrait | 98.33 | 66.67 |
 | worker_lee | Portrait+VPA | 81.67 | 63.33 |
 
-## 남은 작업 (Text-only)
+## 재현 방법
 
-Text-only 조건(`config/robustness/{persona}_textonly.yaml`, 3개)은 이번 범위에서 제외했다. 돌리려면:
+전체 9개 조합 + 집계 재현:
 
 ```bash
-python run.py --run-config config/robustness/student_yoo_textonly.yaml --summary
-python run.py --run-config config/robustness/teacher_park_textonly.yaml --summary
-python run.py --run-config config/robustness/worker_lee_textonly.yaml --summary
+bash scripts/run_robustness_suite.sh
+python scripts/aggregate_macro.py config/manifest_robustness.yaml           # 붕괴율
+python scripts/aggregate_macro.py config/manifest_robustness.yaml --detail  # 페르소나별 세부치 포함
+python scripts/aggregate_macro.py config/manifest_visual.yaml               # 시각적 일치율
 ```
-
-수정된 judge가 이미 `src/evaluators/self_negation.py`에 적용돼 있으므로, 재판정 없이 바로 정확한
-붕괴율이 나온다. 이후 `config/manifest_robustness.yaml`(현재 textonly 경로도 포함되어 있음)로
-`scripts/aggregate_macro.py`를 돌리면 3조건 전체를 한 번에 집계할 수 있다.

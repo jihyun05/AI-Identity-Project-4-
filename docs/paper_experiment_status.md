@@ -47,16 +47,15 @@ worker_lee, student_yoo도 동일한 3단계 구조로 존재.
 - `results_new/visual_portrait/{persona}_grounded_avatar(_qwen)/` = Portrait
 - `results_new/visual_portrait_vpa/{persona}_grounded_avatar_v2(_qwen)/` = Portrait+VPA
 
-**(A) 페르소나 강건성 — Portrait/Portrait+VPA 6개 조합 실행 완료(2026-09-13), Text-only 3개는 아직 없음.**
+**(A) 페르소나 강건성 — 9개 조합(3페르소나×3조건) 전부 실행 완료(2026-09-13).**
 결과와 judge 수정 내역은 4절과 `docs/table1_robustness_results.md` 참고.
 
 ---
 
-## 2. 코드 작성 완료 (2026-08-XX) — Portrait/Portrait+VPA는 실행 완료, Text-only만 남음
+## 2. 코드 작성 및 실행 완료 (2026-08-XX 작성, 2026-09-13 실행)
 
-아래는 전부 작성 완료된 상태다. Portrait/Portrait+VPA 6개 조합은 2026-09-13에 실행 완료했다
-(4절, `docs/table1_robustness_results.md` 참고). **Text-only 3개(`config/robustness/*_textonly.yaml`)는
-아직 실행하지 않았다.**
+아래는 전부 작성 완료된 상태고, 9개 조합(3페르소나×3조건) 전체 실행도 2026-09-13에 끝냈다
+(4절, `docs/table1_robustness_results.md` 참고).
 
 | 파일 | 역할 |
 |---|---|
@@ -66,24 +65,21 @@ worker_lee, student_yoo도 동일한 3단계 구조로 존재.
 | `config/manifest_visual.yaml` | 이미 존재하는 시각적 일치율 결과(`results_new/visual_*`) 경로 정의 (visual_consistency 평가, `invert: true`로 "불일치율"을 "일치율"로 뒤집어서 봄) |
 | `scripts/aggregate_macro.py` | 매니페스트를 읽어 페르소나별로 먼저 계산 후 3페르소나 매크로 평균 → 논문 Table 형식(모델×조건)으로 출력. `--detail`로 페르소나별 세부 수치도 볼 수 있음 |
 
-### 남은 실행 방법 (Text-only 3개)
+### 재현 방법
 
 ```bash
 # 1. (선택) 배선만 빠르게 확인 — 모델 호출 없이 즉시 끝남
 python run.py --run-config config/robustness/student_yoo_textonly.yaml --dry-run
 
-# 2. Text-only 3개 실행 (Qwen3-VL은 ad002에 떠 있어야 함 — scripts/serve_qwen3vl_transformers.py)
-python run.py --run-config config/robustness/student_yoo_textonly.yaml --summary
-python run.py --run-config config/robustness/teacher_park_textonly.yaml --summary
-python run.py --run-config config/robustness/worker_lee_textonly.yaml --summary
+# 2. 9개 전체 실행 (Qwen3-VL은 ad002에 떠 있어야 함 — scripts/serve_qwen3vl_transformers.py)
+bash scripts/run_robustness_suite.sh
 
-# 3. 집계 — 논문 Table 형식으로 출력 (Portrait/Portrait+VPA는 이미 있는 데이터가 함께 잡힘)
+# 3. 집계 — 논문 Table 형식으로 출력
 python scripts/aggregate_macro.py config/manifest_robustness.yaml    # 붕괴율
 python scripts/aggregate_macro.py config/manifest_visual.yaml        # 시각적 일치율 (기존 데이터, 검증됨)
 ```
 
-규모: 3파일 × 2모델 × 12문항 × 5회 = 360턴. judge 호출(항상 gpt-4o-mini)까지 합치면 OpenAI 호출은 이보다 많음.
-`src/evaluators/self_negation.py`의 judge는 이미 수정된 상태라 별도 재판정 없이 바로 정확한 값이 나온다.
+규모: 9파일 × 2모델 × 12문항 × 5회 = 1,080턴. judge 호출(항상 gpt-4o-mini)까지 합치면 OpenAI 호출은 이보다 많음.
 
 ## 3. 검증 중 발견한 문제 — Table 1의 "붕괴율" 열 출처 의심
 
@@ -114,11 +110,22 @@ Portrait/Portrait+VPA 6개 조합(Text-only 제외)을 실제로 실행했다. �
 정상"이라는 규칙과 실제 오판 사례를 예시로 프롬프트에 추가했다. 모델 재호출 없이 저장된 응답만
 새 judge로 재판정하는 `scripts/rejudge_robustness.py`를 만들어 6개 결과 파일에 적용했다.
 
-**수정 전/후 (전체 붕괴율)**: student_yoo_portrait 88.33%→74.17%, student_yoo_portrait_vpa
-92.50%→75.00%, teacher_park_portrait 98.33%→81.67%, teacher_park_portrait_vpa 95.83%→79.17%,
-worker_lee_portrait 91.67%→82.50%, worker_lee_portrait_vpa 94.17%→72.50%. qwen3-vl-4b가
-gpt-4o-mini보다 훨씬 크게 떨어졌다 — 부인 오판이 qwen 응답에 더 흔했기 때문. 최종 수치와 모델별
-매크로 평균은 `docs/table1_robustness_results.md` 참고.
+**수정 전/후 (전체 붕괴율, Portrait/Portrait+VPA)**: student_yoo_portrait 88.33%→74.17%,
+student_yoo_portrait_vpa 92.50%→75.00%, teacher_park_portrait 98.33%→81.67%, teacher_park_portrait_vpa
+95.83%→79.17%, worker_lee_portrait 91.67%→82.50%, worker_lee_portrait_vpa 94.17%→72.50%.
+qwen3-vl-4b가 gpt-4o-mini보다 훨씬 크게 떨어졌다 — 부인 오판이 qwen 응답에 더 흔했기 때문.
+Text-only 3개는 수정된 judge로 처음부터 실행해서 재판정이 필요 없었다.
+
+이어서 Text-only 3개도 실행해 9개 조합 전체를 완성했다. 최종 모델별 매크로 평균(±표본표준편차,
+n=3페르소나)은:
+
+| 모델 | Text-only | Portrait | Portrait+VPA |
+|---|---|---|---|
+| GPT-4o-mini | 72.22 ± 9.18 | 93.89 ± 6.31 | 82.78 ± 1.92 |
+| Qwen3-VL-4B-Instruct | 70.00 ± 8.66 | 65.00 ± 12.58 | 68.33 ± 5.00 |
+
+전체 수치와 페르소나별 세부치는 `docs/table1_robustness_results.md` 참고.
 
 **남은 리스크**: 여전히 단일 LLM judge(gpt-4o-mini) 기반이고, 사람 라벨과의 일치도 검증(inter-rater
-reliability)은 하지 않았다. 논문에 싣기 전에 소수 샘플이라도 사람이 직접 확인해보는 걸 권장한다.
+reliability)은 하지 않았다. 또한 std는 페르소나가 3개뿐이라 참고용 산포 지표일 뿐 엄밀한 신뢰구간은
+아니다. 논문에 싣기 전에 소수 샘플이라도 사람이 직접 확인해보는 걸 권장한다.

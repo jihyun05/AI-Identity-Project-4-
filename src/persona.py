@@ -76,12 +76,23 @@ class Persona:
 @dataclass
 class PersonaComponents:
     """페르소나를 role(항상 포함) + 이름 붙은 문장 컴포넌트 + few_shot으로 쪼갠 정의.
-    ablation 실험에서 컴포넌트를 on/off 조합해 Persona를 생성하는 데 씀."""
+    ablation 실험에서 컴포넌트를 on/off 조합해 Persona를 생성하는 데 씀.
+
+    avatar_path 등이 설정되어 있으면 role/components 조합과 무관하게 모든 변형에
+    동일한 아바타 이미지가 표시된다 (VPA 구성요소 ablation처럼, 이미지 자체는 고정하고
+    이미지에 대한 시스템 프롬프트 지시문만 on/off 하고 싶을 때 사용).
+    few_shot_always_on=True면 "few_shot"이 active 토글 이름으로 쓰이지 않고(구성요소가
+    아니라 고정 베이스라인의 일부로) 항상 포함된다 — 기존 disclosure_guard류 ablation은
+    few_shot을 컴포넌트처럼 on/off 했으므로 기본값 False로 하위호환을 유지한다."""
 
     name: str
     role: str
     components: dict[str, str]
     few_shot: list[dict] = field(default_factory=list)
+    few_shot_always_on: bool = False
+    avatar_path: str | None = None
+    avatar_caption: str = "이것이 지금 당신의 실제 모습입니다."
+    reference_avatar_path: str | None = None
 
     @classmethod
     def from_yaml(cls, path: str | Path) -> "PersonaComponents":
@@ -90,14 +101,25 @@ class PersonaComponents:
             name=data["name"],
             role=data["role"],
             components=data.get("components", {}),
-            few_shot=data.get("few_shot", []),
+            few_shot=_resolve_few_shot_images(data.get("few_shot", [])),
+            few_shot_always_on=data.get("few_shot_always_on", False),
+            avatar_path=data.get("avatar_path"),
+            avatar_caption=data.get("avatar_caption", cls.avatar_caption),
+            reference_avatar_path=(
+                data.get("reference_avatar_path")
+                or data.get("avatar_path")
+            ),
         )
 
     def build(self, active: set[str]) -> Persona:
         lines = [self.role] + [self.components[c] for c in self.components if c in active]
         variant_id = self.name + "__" + ("+".join(sorted(active)) if active else "baseline")
+        few_shot = self.few_shot if (self.few_shot_always_on or "few_shot" in active) else []
         return Persona(
             name=variant_id,
             system_prompt="\n".join(lines),
-            few_shot=self.few_shot if "few_shot" in active else [],
+            few_shot=few_shot,
+            avatar_path=self.avatar_path,
+            avatar_caption=self.avatar_caption,
+            reference_avatar_path=self.reference_avatar_path,
         )
